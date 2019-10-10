@@ -1,0 +1,29 @@
+{
+    "manifest_version": 2,
+    "name": "台鐵時刻系統",
+    "version": "1.0.1",
+    "description": "可以用 Chrome Extension 查詢台鐵時刻表，並且導到台鐵網站",
+    "icons": {
+        "128": "icons/icon.png"
+    },
+    "browser_action":{
+        "default_icon": "icons/icon.png",
+        "default_popup": "popup/popup.html"
+    },
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "content_scripts": [ 
+        {
+          "matches": ["https://tip.railway.gov.tw/*"],
+          "js": ["content_script/searchTrain.js"]
+        }
+      ],
+      "background" :{
+          "scripts" :["background/bg.js"],
+          "persistent" : false
+      },
+      "permissions": [
+        "activeTab",
+        "tabs",
+        "storage"
+      ]
+}

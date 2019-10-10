@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>台鐵訂票系統</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div id="app">
+            <Titles :current="currentPage" @switch-page="switchPage"></Titles>
+            <hr />
+            <div>
+                <div class="row" v-show="currentPage === 'time'">
+                    <label>出發站</label>
+                    <div class="col">
+                        <select class="inline" v-model="startCategory">
+                            <option value="">縣/市(選填)</option>
+                            <option
+                                v-for="(item,index) in category"
+                                :value="item"
+                                >{{ item }}</option
+                            >
+                        </select>
+                        <select
+                            class="inline"
+                            v-model="searchForm.startStation"
+                        >
+                            <option
+                                v-for="(item,index) in startTrainList"
+                                :key="'train-'+index"
+                                >{{ item.id + '-' + item.name }}</option
+                            >
+                        </select>
+                    </div>
+                </div>
+                <div class="row" v-show="currentPage === 'time'">
+                    <label>抵達站</label>
+                    <div class="col">
+                        <select class="inline" v-model="endCategory">
+                            <option value="">縣/市(選填)</option>
+                            <option
+                                v-for="(item,index) in category"
+                                :value="item"
+                                >{{ item }}</option
+                            >
+                        </select>
+                        <select class="inline" v-model="searchForm.endStation">
+                            <option
+                                v-for="(item,index) in endTrainList"
+                                :key="'train-'+index"
+                                >{{ item.id + '-' + item.name }}</option
+                            >
+                        </select>
+                    </div>
+                </div>
+                <div class="row" v-show="currentPage !== 'history'">
+                    <label>查詢日期</label>
+                    <div class="col">
+                        <input type="date" v-model="searchForm.rideDate" />
+                    </div>
+                </div>
+                <div class="row" v-show="currentPage === 'time'">
+                    <label>時間類型</label>
+                    <div class="flex">
+                        <input
+                            type="radio"
+                            value="departure"
+                            v-model="searchForm.timeType"
+                        />出發時間
+                        <input
+                            type="radio"
+                            value="arrival"
+                            v-model="searchForm.timeType"
+                        />抵達時間
+                    </div>
+                </div>
+                <div class="row" v-show="currentPage === 'time'">
+                    <label>查詢時間</label>
+                    <div class="flex">
+                        <select class="time" v-model="searchForm.startTime">
+                            <option v-for="item in timeOptions" :value="item">{{
+                                item
+                            }}</option>
+                        </select>
+                        &nbsp;~&nbsp;
+                        <select class="time" v-model="searchForm.endTime">
+                            <option v-for="item in timeOptions" :value="item">{{
+                                item
+                            }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" v-show="currentPage === 'station'">
+                    <label>查詢車站</label>
+                    <div class="col">
+                        <select v-model="searchForm.singleStation">
+                            <option
+                                v-for="(item,index) in trainList"
+                                :key="'train-'+index"
+                                >{{ item.id + '-' + item.name }}</option
+                            >
+                        </select>
+                    </div>
+                </div>
+                <div class="row" v-show="currentPage === 'trainno'">
+                    <label>查詢車次</label>
+                    <div class="col">
+                        <input type="text" v-model="searchForm.trainNo" />
+                    </div>
+                </div>
+                <div class="row" v-show="currentPage === 'time'">
+                    <label>車種</label>
+                    <div class="flex">
+                        <input
+                            type="radio"
+                            value="all"
+                            v-model="searchForm.checkType"
+                            checked
+                        />全部
+                        <input
+                            type="radio"
+                            value="checkmark"
+                            v-model="searchForm.checkType"
+                        />對號
+                        <input
+                            type="radio"
+                            value="non-checkmark"
+                            v-model="searchForm.checkType"
+                        />非對號
+                    </div>
+                </div>
+                <div class="row" v-show="currentPage === 'history'">
+                    <table v-if="historyList.length">
+                        <thead>
+                            <tr>
+                                <th>類型</th>
+                                <th>日期</th>
+                                <th>內容</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                v-for="item in historyList"
+                                v-if="item"
+                                class="app-tr--hover"
+                                @click="useHistory(item)"
+                            >
+                                <td>{{ item | formatType }}</td>
+                                <td>{{ item.rideDate }}</td>
+                                <td>{{ item | formatContent }}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3">
+                                    <b>點擊各行即可使用快取紀錄</b>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div v-else>您尚未有任何搜尋紀錄!!</div>
+                </div>
+                <div class="row" v-show="currentPage !== 'history'">
+                    <div class="btn btn-blue" @click="submitSearch">查詢</div>
+                    <div class="btn btn-white" @click="clearCondition">
+                        初始化
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="dayjs.min.js"></script>
+        <script src="vue.min.js"></script>
+        <script src="main.js"></script>
+    </body>
+</html>

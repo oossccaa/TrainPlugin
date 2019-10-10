@@ -1,0 +1,128 @@
+@charset "UTF-8";
+* {
+    box-sizing: border-box;
+    font-family: '微軟正黑體';
+}
+
+html,
+body {
+    background: #fefefe;
+    margin: 0;
+    padding: 0;
+    /* height: 100% */
+}
+
+body {
+    width: 350px;
+    max-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
+#app {
+    text-align: center;
+}
+#app .titles {
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+#app .titles span {
+    font-size: 1.5em;
+    font-weight: bolder;
+}
+#app .titles a {
+    font-size: 16px;
+    color: #288de2;
+    font-weight: bolder;
+    cursor: pointer;
+    margin-left: 3px;
+}
+#app .titles a.right {
+    margin-left: 50px;
+    color: #999999;
+}
+
+#app hr {
+    border-color: #288de2;
+}
+#app .row {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+#app .row label {
+    width: 100px;
+    display: inline-block;
+    font-weight: bold;
+}
+#app .row .col {
+    display: inline-block;
+    width: 200px;
+}
+#app .row > .col > select,
+#app .row > .col > input {
+    width: 100%;
+}
+#app .row select.time,
+#app .row select.inline {
+    width: 45%;
+}
+#app .row .flex {
+    width: 200px;
+    display: flex;
+    justify-content: center;
+}
+#app table{
+    border: #1768ac 1px solid;
+}
+#app table td,#app table th{
+    border: #1768ac 1px solid;
+    padding: 5px 10px
+}
+
+#app .app-tr--hover:hover{
+    cursor: pointer;
+    background: #e2f3ff9c;
+}
+
+#app table tfoot {
+    text-align: right;
+    text-decoration: underline;
+    color: #288de2;
+}
+
+.btn {
+    font-size: 16px;
+    padding: 6px 12px;
+    margin: 0 20px;
+    display: inline-block;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-blue {
+    background: #288de2;
+    color: #fff;
+}
+.btn-blue:hover {
+    color: #fff;
+    background-color: #1768ac;
+}
+.btn-blue:active {
+    color: #fff;
+    background-color: #288de2;
+}
+
+.btn-white {
+    border: 1px solid #288de2;
+    color: #288de2;
+}
+.btn-white:hover {
+    background-color: #f1f4ff;
+}
+.btn-white:active {
+    background-color: #d6dfff;
+}
